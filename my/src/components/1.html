@@ -1,0 +1,11 @@
+devServer: {
+historyApiFallback: true,
+noInfo: true,
+port: 8080,
+proxy: {
+'*': {
+target: 'http://xx.xx.xx.xx:58181/',
+changeOrigin: true,
+secure: false
+}
+}
