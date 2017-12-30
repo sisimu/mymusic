@@ -57,18 +57,26 @@
     },
     methods:{
         login(){
-            //15116346294
-            var url ='http://localhost:3000' + '/login/cellphone?phone='+this.phone+'&password='+this.password;
+            //15116346294 http://localhost:3000/
+            var url ='/api/login/cellphone?phone='+this.phone+'&password='+this.password;
 //            <!--/login/cellphone?phone=xxx&password=yyy-->
-            this.$http.get(url).then(function(res){
-                var data = res.body;
-                console.log(res.body);
-                if(data.code==200){
-                    console.log(data.profile.userId);
-                    console.log('登录成功');
-                }
+        this.$http.get(url,{credentials: true}).then(function (response) {
+            console.log(response);
+          })
 
-            })
+
+//        app.get('/register', function (req, res) {
+//            res.jsonp(data)
+//     ｝
+//            this.$http.get(url).then(function(res){
+//                var data = res.body;
+//              console.log(url);
+//                console.log(res.body);
+//                if(data.code==200){
+//                    console.log(data.profile.userId);
+//                    console.log('登录成功');
+//                }
+//            })
         },
         showLogin(){
             this.showLoginBox=!this.showLoginBox;

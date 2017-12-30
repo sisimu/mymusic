@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<div>
+  dejs 跨域设置cookie
+  在做vue全家桶+express 做项目。 想做一个免登陆功能，选择session方案。 服务器设置session 后， 返回的响应头有Set-Cookie,但是浏览器的Application的cookies缺没有返回的sessionID的cookie。 折腾了很久，才意识到这是跨域造成了问题。前端是8080端口，后端是4000端口。 默认情况下跨域请求浏览器不会携带凭证信息（cookie, ssl证明等），服务器设置的cookie也会被浏览器拦截
+  所以解决方案是
+  前端的ajax后者axios需要设置withCredentials为true。我的是axios，这样请求会携带上cookie
+  同时后端使用cors中间件。 即可
+  复制代码
+  //需要安装并且引入中间件cors
+  const cors = require('cors');
+  var corsOptions = {
+  origin: 'http://localhost:8080',
+  credentials: true,
+  maxAge: '1728000'
+  //这一项是为了跨域专门设置的
+  }
+  app.use(cors(corsOptions))
+  //设置跨域
+  复制代码
+  如果不用中间件，也可以这样，显示的设置
+  Access-Control-Allow-Credentials 为true
+  注意origin不能是*号.。 这样浏览器就不会拦截服务器设置的cookie了
+  复制代码
+  1 app.all('*', function(req, res, next) {
+  2     res.header("Access-Control-Allow-Origin", req.headers.origin); //需要显示设置来源
+  3     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  4     res.header("Access-Control-Allow-Methods","PUT,POST,GET,DELETE,OPTIONS");
+  5     res.header("Access-Control-Allow-Credentials",true); //带cookies7     res.header("Content-Type", "application/json;charset=utf-8");
+  8     next();
+  9 });
+  复制代码
+</div>
+
+</body>
+</html>
