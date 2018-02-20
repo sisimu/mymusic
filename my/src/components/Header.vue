@@ -17,23 +17,36 @@
             <!--右边登录设置等等-->
             <div class="boxRight">
                 <div class="userBox">
-                        <!--用户姓名及头像-->
-                        <!--<img src="../../statics/imgs/4.png " alt=""/>-->
-                        <!--<span>四四</span>-->
-                        <span @click='showLogin'>登录</span>|
-                        <span>注册</span>
+                        <span v-if='!flag'>
+                          <span @click='showLogin'>未登录</span>
+                          <span>注册</span>
+                        </span>
+                        <span v-if='flag'>
+                          <span @click='showLogin' class='userImg' ><img  v-bind:src="infoList.avatarUrl" /></span>
+                          <span data-userInfo='username'>{{infoList.nickname}}</span>
+                        </span>
                         <span class='fa fa-angle-down'></span>
-                    <div class='loginBox' v-if='showLoginBox'>
-                        <!--/login/cellphone?phone=xxx&password=yyy-->
-                        <input type="text" name='phone' v-model='phone'/>
-                        <input type="password" name='password' v-model='password'/>
-                       <button @click='login'>登录</button>
-                    </div>
+                        <div class='loginBox' v-if='showLoginBox'>
+                                <div v-if='!flag'>
+                                    <input type="text" name='phone' v-model='phone'/>
+                                    <input type="password" name='password' v-model='password'/>
+                                    <button @click='login'>登录</button>
+                                </div>
+                                <div v-if='flag'>
+                                    个人信息
+                                    <div>
+                                      <span>会员</span>
+                                      <span>等级</span>
+                                      <span class='fa '></span>
+
+                                    </div>
+                                </div>
+                        </div>
                 </div>
                 <div class="center">
                     <span>换肤</span>
                     <span class='fa fa-envelope-open-o'></span>
-                    <span class='fa fa-cog'></span>|
+                    <span class='fa fa-cog'></span>
                 </div>
                 <div class='wxindowBox'>
                     <span>迷你</span>
@@ -46,43 +59,49 @@
     </div>
 </template>
 <script>
-//    import common from '../src/common/common.js'
+  import $ from '../../static/jquery/jquery-3.2.0.js';
     export default{
         data(){
             return {
                 showLoginBox: false,
                 phone:'',
-                password:''
+                password:'',
+                flag: false,
+                infoList:{}
             }
     },
+    created(){
+    this.loginFlag();
+}
+    ,
     methods:{
+        loginFlag(){
+        var myInfo = $cookies.get('userInfo');
+              myInfo = JSON.parse(myInfo);//把json格式的对象，转换成对象
+//              console.log(myInfo);
+              if(myInfo){
+                this.flag = true;
+                this.infoList = myInfo;
+              }else{
+                this.flag = false;
+              }
+            },
         login(){
-            //15116346294 http://localhost:3000/
             var url ='/api/login/cellphone?phone='+this.phone+'&password='+this.password;
-//            <!--/login/cellphone?phone=xxx&password=yyy-->
         this.$http.get(url,{credentials: true}).then(function (response) {
             console.log(response);
+          var data = response.data;
+            if(response.status==200){
+              console.log(response.data.profile);
+              var userInfoString = JSON.stringify(response.data.profile);
+                 $cookies.set("userInfo",userInfoString,'2m');
+            }
           })
-
-
-//        app.get('/register', function (req, res) {
-//            res.jsonp(data)
-//     ｝
-//            this.$http.get(url).then(function(res){
-//                var data = res.body;
-//              console.log(url);
-//                console.log(res.body);
-//                if(data.code==200){
-//                    console.log(data.profile.userId);
-//                    console.log('登录成功');
-//                }
-//            })
         },
         showLogin(){
             this.showLoginBox=!this.showLoginBox;
         }
     }
-
     }
 </script>
 
@@ -177,7 +196,9 @@
         color: #000;
     }
 
-
-
-
+    .userImg img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
 </style>

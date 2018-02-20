@@ -3,10 +3,22 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router';
-//导入vue-resource
-//import vueResource from 'vue-resource';
-//Vue.use(vueResource);
 
+
+import VueCookies from 'vue-cookies';
+Vue.use(VueCookies);
+
+//import vuex from 'vuex';
+//Vue.use(vuex);
+
+import vuex from 'vuex';
+Vue.use(vuex);
+//
+//import MintUI from 'mint-ui';
+//import 'mint-ui/lib/style.css';
+//Vue.use(MintUI);
+
+import '../static/mui/css/mui.css';
 
 //在main.js里面加入以下代码
 //import VueResource from 'vue-resource'
@@ -40,16 +52,69 @@ Vue.prototype.$http = axios;
 //Vue.use(mintui);
 
 // 5.0 注册mui的css样式
-//import '../statics/mui/css/mui.css';
+import '../static/mui/css/mui.css';
 //导入全局样式
-//import '../statics/css/site.css';
+import '../static/css/site.css';
+Vue.config.productionTip = false;
 
-Vue.config.productionTip = false
+//轮播图模块
+import VueAwesomeSwiper from 'vue-awesome-swiper';
+Vue.use(VueAwesomeSwiper);
+import 'swiper/dist/css/swiper.css';
+
+
+const store = new vuex.Store({
+  state:{
+    song:{},
+    playUrl:''
+  },
+  mutations:{
+    //this.$store.commit('addSong');
+      addSong(state,songInfo){
+  //将歌单添加到播放器，将歌单信息存到store里
+      //  state.song.push(songInfo);
+      state.song = songInfo;
+    },
+//根据id播放歌曲，改变aduio src 的值
+    play(state,id){
+    //      var  playSong = document.getElementById('playSong');
+    //      http://music.163.com/song/media/outer/url?id=id.mp3;
+
+
+    //  playSong='http://music.163.com/song/media/outer/url?id='+id+'.mp3';
+    state.playUrl='http://music.163.com/song/media/outer/url?id='+id+'.mp3';
+    //  return playSong;
+    }
+  },
+  getters:{
+    // this.$store.getters.fn
+    changeSong(state){
+     // val Url = state.playUrl;
+      return state.playUrl;
+    }
+  }
+});
+//
+//const store = new vuex.Store({
+//  state: {
+//    count: 0,
+//    songUrl:''
+//  },
+//  mutations: {
+//    increment (state) {
+//      //state.count++
+//  //state.songUrl
+//    }
+//  }
+//});
+
+
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: { App }
 })

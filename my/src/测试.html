@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<script>
+  var s ='welcome to beijing';
+  //welcome to beijing
+  function changeStr(str){
+    var arr =str.split(' ');
+    arr.forEach(function(value,index,array){
+      array[index] = value+index;
+    })
+    var st = arr.join(' ');
+    console.log(st);
+  }
+changeStr(s);
+</script>
+</body>
+</html>

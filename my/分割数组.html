@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+
+
+<script>
+  var Myarry=[
+    {name:1},
+    {name:2},
+    {name:3},
+    {name:4},
+    {name:5},
+    {name:6},
+    {name:7},
+    {name:8},
+    {name:9},
+    {name:10},
+  ];
+  var newArray = [];
+  var subArray = [];
+  var flag = Math.ceil((Myarry.length)/4);
+  console.log(flag);
+  for(var i = 0;i < flag;i++){
+    for(var j=0;j<4;j++){
+      if((i*4+j)>Myarry.length-1){
+        continue;
+      }
+      subArray.push(Myarry[i*4+j]);
+    }
+    console.log(subArray);
+    newArray.push(subArray);
+    subArray=[];
+  }
+  console.log(newArray);
+</script>
+</body>
+</html>

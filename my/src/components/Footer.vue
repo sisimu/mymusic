@@ -13,7 +13,7 @@
             <div class="barBox">
                 <span>5:03:10临时</span>
                 <!--<div class="bar"></div>-->
-                <audio width='100px' height='60px' id="audio"  src='../../statics/bgm/1.mp3' controls>lkkj</audio>
+                <audio width='100px' height='60px' id="audio"  :src='$store.getters.changeSong' controls>lkkj</audio>
             </div>
             <div class='right'>
                 <!--播放列表-->
@@ -45,6 +45,7 @@
                 //播放列表的展开和隐藏
                 this.show=!this.show;
             }
+
         }
     }
 </script>

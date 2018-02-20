@@ -17,7 +17,7 @@
             <dd><a href="javascript:;">我的收藏</a></dd>
         </dl>
         <dl>
-            <dt><a href="javascript:;">创建歌单 <span>+</span></a></dt>
+            <dt><a href="javascript:;">创建歌单<span>+</span></a></dt>
             <dd><a href="javascript:;">我的歌单一</a></dd>
             <dd><a href="javascript:;">我的歌单二</a></dd>
             <dd><a href="javascript:;">我的歌单三</a></dd>
@@ -53,7 +53,7 @@
     .leftList {
         /*color: #101010;*/
         border-left: 1px solid #101010;
-        width: 40%;
+        width: 30%;
         float: left;
 
     }
